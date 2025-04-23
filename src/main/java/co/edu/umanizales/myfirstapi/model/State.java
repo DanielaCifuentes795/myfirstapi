@@ -7,9 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Location {
-    private String stateCode;
-    private String stateName;
+public class State {
     private String code;
     private String name;
 }
