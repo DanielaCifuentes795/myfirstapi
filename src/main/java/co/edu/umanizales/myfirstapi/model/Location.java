@@ -8,6 +8,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Location {
+    private String stateCode;
+    private String stateName;
     private String code;
-    private String description;
+    private String name;
 }

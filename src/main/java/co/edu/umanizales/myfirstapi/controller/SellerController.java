@@ -14,10 +14,10 @@ public class SellerController {
 
     @GetMapping
     public List<Seller> getSeller() {
-        Location manizales = new Location("17001", "Manizales");
-        Location pereira = new Location("66001", "Pereira");
-        Location risaralda = new Location("17616", "Risaralda");
-        Location aranzazu = new Location("17050", "Aranzazu");
+        Location manizales = new Location("13", "Caldas", "17001", "Manizales");
+        Location pereira = new Location("13", "Caldas","66001", "Pereira");
+        Location risaralda = new Location("13", "Caldas","17616", "Risaralda");
+        Location aranzazu = new Location("13", "Caldas","17050", "Aranzazu");
         Seller daniela = new Seller("1053854324", "Daniela", "Cifuentes Rendón", 'F', (byte) 28, manizales);
         Seller adriana = new Seller("30331751", "Adriana María", "Rendoón Gómez", 'F', (byte) 50, manizales);
         Seller andres = new Seller("1060649816", "Andrés", "Taborda Posada", 'M', (byte) 34, risaralda);
