@@ -120,7 +120,7 @@ public class LocationService {
         public List<Location> getLocationCapitals () {
             List<Location> locationCapitals = new ArrayList<>();
             for (Location location : locations) {
-                if (location.getCode().contains("001")) {
+                if (location.getCode().contains("001") && location.getCode().length() == 5) {
                     locationCapitals.add(location);
                 }
             }
@@ -142,4 +142,17 @@ public class LocationService {
             }
             return locationStates;
         }
+
+        //Objetivo: Crear un metodo que retorne una lista de municipios de Colombia que inicie y termine en dos letras ingresadas por el usuario
+        //Datos de entrada: Las dos letras que el usuario desee ingresar
+        //Datos de salida: Un listado de sitios con la informacion de los muninicipios que coincide con las letras ingresadas
+        public List<Location> getLocationByLetters(String initial,String end) {
+        List<Location> locationLetters = new ArrayList<>();
+        for (Location location : locations) {
+            if (location.getName().startsWith(initial) && location.getName().endsWith(end) ) {
+                locationLetters.add(location);
+            }
+        }
+        return locationLetters;
+    }
 }
