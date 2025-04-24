@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 
 public class Store {
-    private char code;
+    private String code;
     private String name;
     private String address;
     private Location city;

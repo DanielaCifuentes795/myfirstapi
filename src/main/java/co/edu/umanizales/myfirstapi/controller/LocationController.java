@@ -72,6 +72,11 @@ public class LocationController {
     public List<State> getLocationStates() {
         return locationService.getLocationStates();
     }
+
+    @GetMapping(path = "/letters/{initial}/{end}")
+    public List<Location> getLocationByLetters(@PathVariable String initial, @PathVariable String end) {
+        return locationService.getLocationByLetters(initial,end);
+    }
 }
 
 
