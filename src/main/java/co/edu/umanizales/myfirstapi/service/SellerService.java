@@ -1,7 +1,6 @@
 package co.edu.umanizales.myfirstapi.service;
 
 import co.edu.umanizales.myfirstapi.model.Location;
-import co.edu.umanizales.myfirstapi.model.Parameter;
 import co.edu.umanizales.myfirstapi.model.Seller;
 import co.edu.umanizales.myfirstapi.model.TypeDocument;
 import com.opencsv.CSVReader;
@@ -10,7 +9,6 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -31,13 +29,11 @@ public class SellerService {
     public SellerService(LocationService locationService, ParameterService parameterService) {
         this.locationService = locationService;
         this.parameterService = parameterService;
-
     }
 
     @PostConstruct
-    public void readSellerFromCSV() throws IOException, URISyntaxException {
+    public void readStoreFromCSV() throws IOException, URISyntaxException {
         sellers = new ArrayList<>();
-
         Path pathFile = Paths.get(ClassLoader.getSystemResource(seller_filename).toURI());
 
         try (CSVReader csvReader = new CSVReader(new FileReader(pathFile.toString()))) {
@@ -46,11 +42,9 @@ public class SellerService {
             //Leer todas las filas del CSV
             while ((line = csvReader.readNext()) != null) {
                 TypeDocument document = parameterService.getTypeDocument(String.valueOf(line[1]));
-                System.out.println(document);
-
-                Location city = locationService.getLocationByName(line[5]);
+                Location city = locationService.getLocationByName(line[3]);
                 byte age = Byte.parseByte(line[4]);
-                sellers.add(new Seller(line[0], document, line[2], line[3], age, city));
+                sellers.add(new Seller(line[0],document, line[2], line[3], age, city));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,5 +52,13 @@ public class SellerService {
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
         }
+    }
+    public Seller searchSeller(String identification) {
+        for (Seller seller : sellers) {
+            if (seller.getIdentification().equals(identification)) {
+                return seller;
+            }
+        }
+        return null;
     }
 }

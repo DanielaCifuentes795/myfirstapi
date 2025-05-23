@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "2a94b54f-6402-4da6-973c-51008124d550",
+		"name": "Prog1_MyFirstAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42949168"
+	},
+	"item": [
+		{
+			"name": "Sale",
+			"item": [
+				{
+					"name": "All sales",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sale",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add sale",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"storeCode\": \"401\",\n    \"sellerIdentification\": \"1053854324\",\n    \"dateSale\": \"2025-05-23\",\n    \"productIds\": [\"2\", \"5\", \"3\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/sale/add",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter store",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sale/filter-store/401",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale",
+								"filter-store",
+								"401"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sale/filter-product/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale",
+								"filter-product",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter seller",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sale/filter-seller/1053854324",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale",
+								"filter-seller",
+								"1053854324"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter day",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/sale/filter-day/2025-05-11",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sale",
+								"filter-day",
+								"2025-05-11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Locations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/location",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Locations By Code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/location/5001",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"location",
+						"5001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get States",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/location",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "seller",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/seller",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"seller"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stores",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/store",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"store"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "parameters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/parameter/typeproducts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"parameter",
+						"typeproducts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/product",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
