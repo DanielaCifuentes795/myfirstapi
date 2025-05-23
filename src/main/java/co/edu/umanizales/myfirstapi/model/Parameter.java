@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class State {
+public abstract class Parameter {
     private String code;
     private String name;
 }

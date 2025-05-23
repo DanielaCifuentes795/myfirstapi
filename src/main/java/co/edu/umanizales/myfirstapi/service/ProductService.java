@@ -1,14 +1,13 @@
 package co.edu.umanizales.myfirstapi.service;
 
-import co.edu.umanizales.myfirstapi.model.Location;
-import co.edu.umanizales.myfirstapi.model.Store;
+import co.edu.umanizales.myfirstapi.model.Product;
+import co.edu.umanizales.myfirstapi.model.TypeProduct;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,23 +18,23 @@ import java.util.List;
 
 @Service
 @Getter
-public class StoreService {
+public class ProductService {
 
     private final LocationService locationService;
-    private List<Store> store;
+    private List<Product> products;
 
-    @Value("${store_filename}")
-    private String store_filename;
+    @Value("${product_filename}")
+    private String product_filename;
 
-    public StoreService(LocationService locationService) {
+    public ProductService(LocationService locationService) {
         this.locationService = locationService;
     }
 
     @PostConstruct
-    public void readStoreFromCSV() throws IOException, URISyntaxException {
-        store = new ArrayList<>();
+    public void readProductFromCSV() throws IOException, URISyntaxException {
+        products = new ArrayList<>();
 
-        Path pathFile = Paths.get(ClassLoader.getSystemResource(store_filename).toURI());
+        Path pathFile = Paths.get(ClassLoader.getSystemResource(product_filename).toURI());
 
         try (CSVReader csvReader = new CSVReader(new FileReader(pathFile.toString()))) {
             String[] line;
@@ -43,9 +42,11 @@ public class StoreService {
             //Leer todas las filas del CSV
             while ((line = csvReader.readNext()) != null) {
                 System.out.println(line[1]);
-                Location city = locationService.getLocationByName(line[3]);
+                Product price = new Product(line[2]);
+                Product stock = new Product(line[3]);
+                Product type = new TypeProduct(line[4]);
                 //Crear un nuevo objeto Store y agregarlo a la lista
-                store.add(new Store(line[0],line[1],line[2],city));
+                products.add(new Product(line[0],line[1],price,stock,type));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,10 +56,10 @@ public class StoreService {
         }
     }
 
-    public Store seachStore(String code) {
-        for (Store store : store) {
-            if (store.getCode().equals(code)) {
-                return store;
+    public Product seachProduct(String code) {
+        for (Product product : products) {
+            if (products.getCode().equals(code)) {
+                return products;
             }
         }
         return null;

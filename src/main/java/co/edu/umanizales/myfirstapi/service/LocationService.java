@@ -1,7 +1,6 @@
 package co.edu.umanizales.myfirstapi.service;
 
 import co.edu.umanizales.myfirstapi.model.Location;
-import co.edu.umanizales.myfirstapi.model.State;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.annotation.PostConstruct;
@@ -26,12 +25,42 @@ public class LocationService {
         @Value("${locations_filename}")
         private String locations_filename;
 
-        @PostConstruct
-        public void readLocationsFromCSV() throws IOException, URISyntaxException {
+         @PostConstruct
+         public void readLocationsFromCSV() throws IOException, URISyntaxException {
             locations = new ArrayList<>();
-    //        locations.add(new Location("05", "ANTIOQUIA"));
-    //        locations.add(new Location("17", "CALDAS"));
-    //        locations.add(new Location("66", "RISARALDA"));
+            locations.add(new Location("05","ANTIOQUIA"));
+            locations.add(new Location("17","CALDAS"));
+            locations.add(new Location("66","RISARALDA"));
+            locations.add(new Location("91","AMAZONAS"));
+            locations.add(new Location("08","ATLANTICO"));
+            locations.add(new Location("11","BOGOTA"));
+            locations.add(new Location("13","BOLIVAR"));
+            locations.add(new Location("15","BOYACA"));
+            locations.add(new Location("18","CAQUETA"));
+            locations.add(new Location("19","CAUCA"));
+            locations.add(new Location("85","CASANARE"));
+            locations.add(new Location("20","CESAR"));
+            locations.add(new Location("27","CHOCO"));
+            locations.add(new Location("25","CUNDINAMARCA"));
+            locations.add(new Location("23","CORDOBA"));
+            locations.add(new Location("94","GUANIA"));
+            locations.add(new Location("95","GUAVIARE"));
+            locations.add(new Location("41","HUILA"));
+            locations.add(new Location("44","LA GUAJIRA"));
+            locations.add(new Location("47","MAGDALENA"));
+            locations.add(new Location("50","META"));
+            locations.add(new Location("52","NARIÑO"));
+            locations.add(new Location("54","NORTE DE SANTANDER"));
+            locations.add(new Location("86","PUTUMAYO"));
+            locations.add(new Location("63","QUINDIO"));
+            locations.add(new Location("88","SAN ANDRES y PROVIDENCIA"));
+            locations.add(new Location("68","SANTANDER"));
+            locations.add(new Location("70","SUCRE"));
+            locations.add(new Location("73","TOLIMA"));
+            locations.add(new Location("76","VALLE DEL CAUCA"));
+            locations.add(new Location("99","VICHADA"));
+            locations.add(new Location("97","VAUPES"));
+            locations.add(new Location("81","ARAUCA"));
 
             Path pathFile = Paths.get(ClassLoader.getSystemResource(locations_filename).toURI());
 
@@ -42,7 +71,7 @@ public class LocationService {
                 while ((line = csvReader.readNext()) != null) {
                     System.out.println(line[1]);
                     //Crear un nuevo objeto Location y agregarlo a la lista
-                    locations.add(new Location(line[0], line[1], line[2], line[3]));
+                    locations.add(new Location(line[2], line[3]));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -92,10 +121,10 @@ public class LocationService {
         //Objetivo: Crear un metodo que retorne la lista de municipios que coincidan con el codigo del departamento de Colombia al que pertenecen
         //Datos de entrada: Un numero de dos digitos
         //Datos de salida: Un listado de sitios con la informacion de los muninicipios que hacen parte del departmento bajo el codigo ingresado
-        public List<Location> getLocationByStateCode(String statecode) {
+        public List<Location> getLocationByStateCode(String stateCode) {
             List<Location> locationStateCode = new ArrayList<>();
             for (Location location : locations) {
-                if (location.getStateCode().equals(statecode)) {
+                if (location.getCode().equals(stateCode)) {
                     locationStateCode.add(location);
                 }
             }
@@ -105,13 +134,14 @@ public class LocationService {
         //Objetivo: Crear un metodo que retorne la lista de municipios que coincidan con el codigo del departamento de Colombia al que pertenecen
         //Datos de entrada: Un numero de dos digitos
         //Datos de salida: Un listado de sitios con la informacion de los muninicipios que hacen parte del departamento bajo el codigo ingresado
-        public State getLocationStateByCode(String code) {
+        public List<Location> getLocationStateByCode(String code) {
+             List<Location> locationCode = new ArrayList<>();
             for (Location location : locations) {
-                if (location.getStateCode().equals(code)) {
-                    return new State(location.getStateCode(), location.getStateName());
+                if (location.getCode().equals(code)) {
+                    locationCode.add(location);
                 }
             }
-            return null;
+            return locationCode;
         }
 
         //Objetivo: Crear un metodo que retorne la lista las ciudades capitales de Colombia
@@ -130,14 +160,11 @@ public class LocationService {
         //Objetivo: Crear un metodo que retorne la lista de departamentos de Colombia
         //Datos de entrada: La palabra "States"
         //Datos de salida: Listado de los departamentos del país
-        public List<State> getLocationStates() {
-            List<State> locationStates = new ArrayList<>();
-            String stateName = "";
+        public List<Location> getStates() {
+            List<Location> locationStates = new ArrayList<>();
             for (Location location : locations) {
-                if(stateName.equals(location.getStateName())) {
-                } else {
-                    stateName = location.getStateName();
-                    locationStates.add(new State(location.getStateCode(), location.getStateName()));
+                if(location.getCode().length()==2){
+                    locationStates.add(location);
                 }
             }
             return locationStates;
