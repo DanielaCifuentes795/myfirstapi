@@ -10,9 +10,9 @@ import lombok.Setter;
 
 public class Seller {
     private String identification;
+    private TypeDocument typeDocument;
     private String name;
     private String lastName;
-    private char gender;
     private byte age;
     private Location city;
 }

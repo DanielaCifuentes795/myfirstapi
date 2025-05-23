@@ -1,7 +1,9 @@
 package co.edu.umanizales.myfirstapi.service;
 
 import co.edu.umanizales.myfirstapi.model.Location;
-import co.edu.umanizales.myfirstapi.model.Store;
+import co.edu.umanizales.myfirstapi.model.Parameter;
+import co.edu.umanizales.myfirstapi.model.Seller;
+import co.edu.umanizales.myfirstapi.model.TypeDocument;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import jakarta.annotation.PostConstruct;
@@ -19,33 +21,36 @@ import java.util.List;
 
 @Service
 @Getter
-public class StoreService {
-
+public class SellerService {
+    private final ParameterService parameterService;
     private final LocationService locationService;
-    private List<Store> store;
+    private List<Seller> sellers;
 
-    @Value("${store_filename}")
-    private String store_filename;
-
-    public StoreService(LocationService locationService) {
+    @Value("${seller_filename}")
+    private String seller_filename;
+    public SellerService(LocationService locationService, ParameterService parameterService) {
         this.locationService = locationService;
+        this.parameterService = parameterService;
+
     }
 
     @PostConstruct
-    public void readStoreFromCSV() throws IOException, URISyntaxException {
-        store = new ArrayList<>();
+    public void readSellerFromCSV() throws IOException, URISyntaxException {
+        sellers = new ArrayList<>();
 
-        Path pathFile = Paths.get(ClassLoader.getSystemResource(store_filename).toURI());
+        Path pathFile = Paths.get(ClassLoader.getSystemResource(seller_filename).toURI());
 
         try (CSVReader csvReader = new CSVReader(new FileReader(pathFile.toString()))) {
             String[] line;
             csvReader.skip(1);
             //Leer todas las filas del CSV
             while ((line = csvReader.readNext()) != null) {
-                System.out.println(line[1]);
-                Location city = locationService.getLocationByName(line[3]);
-                //Crear un nuevo objeto Store y agregarlo a la lista
-                store.add(new Store(line[0],line[1],line[2],city));
+                TypeDocument document = parameterService.getTypeDocument(String.valueOf(line[1]));
+                System.out.println(document);
+
+                Location city = locationService.getLocationByName(line[5]);
+                byte age = Byte.parseByte(line[4]);
+                sellers.add(new Seller(line[0], document, line[2], line[3], age, city));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,14 +58,5 @@ public class StoreService {
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Store seachStore(String code) {
-        for (Store store : store) {
-            if (store.getCode().equals(code)) {
-                return store;
-            }
-        }
-        return null;
     }
 }

@@ -1,15 +1,20 @@
 package co.edu.umanizales.myfirstapi.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import co.edu.umanizales.myfirstapi.dto.SaleDto;
+import co.edu.umanizales.myfirstapi.model.Sale;
+import co.edu.umanizales.myfirstapi.model.Store;
+import co.edu.umanizales.myfirstapi.service.SaleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/sale")
+@RequestMapping(path="/sale")
 public class SaleController {
+    @Autowired
+    private SaleService saleService;
 
-    @GetMapping
-    public String getSale(){
-            return "String";
+    @PutMapping("/add")
+    public String addSale(@RequestBody SaleDto saleDto){
+        return saleService.createSale(saleDto);
     }
 }

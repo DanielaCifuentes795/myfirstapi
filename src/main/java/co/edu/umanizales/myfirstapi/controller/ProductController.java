@@ -1,9 +1,11 @@
 package co.edu.umanizales.myfirstapi.controller;
 
 import co.edu.umanizales.myfirstapi.model.Location;
-import co.edu.umanizales.myfirstapi.model.Seller;
+import co.edu.umanizales.myfirstapi.model.Product;
+import co.edu.umanizales.myfirstapi.model.Store;
 import co.edu.umanizales.myfirstapi.service.LocationService;
-import co.edu.umanizales.myfirstapi.service.SellerService;
+import co.edu.umanizales.myfirstapi.service.ProductService;
+import co.edu.umanizales.myfirstapi.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,22 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/seller")
-public class SellerController {
+@RequestMapping(path = "/product")
+public class ProductController {
 
     @Autowired
-    private SellerService sellerService;
-
-    @Autowired
-    private LocationService locationService;
+    private ProductService productService;
 
     @GetMapping
-    public List<Seller> getSeller() {
-        return sellerService.getSellers();
-    }
-
-    @GetMapping(path = "/name/{name}")
-    public Location getLocationByName(@PathVariable String name) {
-        return locationService.getLocationByName(name);
+    public List<Product> getProduct() {
+        return productService.getProducts();
     }
 }
