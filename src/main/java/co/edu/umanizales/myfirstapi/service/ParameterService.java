@@ -22,9 +22,9 @@ public class ParameterService {
         parameters.add(new TypeDocument("NIT", "Número de identificación tributaria"));
 
         //Type Product
-        TypeProduct ropa = new TypeProduct("1","Camiseta blanca unisex");
+        TypeProduct ropa = new TypeProduct("1","ROPA");
         parameters.add(ropa);
-        parameters.add(new TypeProduct("2","Pantalon jean mujer"));
+        parameters.add(new TypeProduct("2","CALZADO"));
 
         parameters.add(new Product("1","Camiseta blanca mujer",62000,100, ropa));
     }
@@ -57,7 +57,7 @@ public class ParameterService {
         if (result.isEmpty()){
             System.out.println("No se encontró información para el tipo ingresado");
 
-            }
+        }
         return result;
     }
 
@@ -66,6 +66,15 @@ public class ParameterService {
         for (Parameter p : parameters) {
             if (p.getCode().equals(type)) {
                 return (TypeDocument) p;
+            }
+        }
+        return null;
+    }
+
+    public TypeProduct getTypeProduct(String type) {
+        for (Parameter p : parameters) {
+            if (p.getCode().equals(type)) {
+                return (TypeProduct) p;
             }
         }
         return null;

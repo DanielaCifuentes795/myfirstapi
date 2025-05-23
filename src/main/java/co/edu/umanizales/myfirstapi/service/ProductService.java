@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -20,18 +21,18 @@ import java.util.List;
 @Getter
 public class ProductService {
 
-    private final LocationService locationService;
+    private final ParameterService parameterService;
     private List<Product> products;
 
     @Value("${product_filename}")
     private String product_filename;
 
-    public ProductService(LocationService locationService) {
-        this.locationService = locationService;
+    public ProductService(ParameterService parameterService) {
+        this.parameterService = parameterService;
     }
 
     @PostConstruct
-    public void readProductFromCSV() throws IOException, URISyntaxException {
+    public void readStoreFromCSV() throws IOException, URISyntaxException {
         products = new ArrayList<>();
 
         Path pathFile = Paths.get(ClassLoader.getSystemResource(product_filename).toURI());
@@ -41,12 +42,10 @@ public class ProductService {
             csvReader.skip(1);
             //Leer todas las filas del CSV
             while ((line = csvReader.readNext()) != null) {
-                System.out.println(line[1]);
-                Product price = new Product(line[2]);
-                Product stock = new Product(line[3]);
-                Product type = new TypeProduct(line[4]);
-                //Crear un nuevo objeto Store y agregarlo a la lista
-                products.add(new Product(line[0],line[1],price,stock,type));
+                TypeProduct productType = parameterService.getTypeProduct(String.valueOf(line[4]));
+                double price = Double.parseDouble(line[2]);
+                int stock = Integer.parseInt(line[3]);
+                products.add(new Product(line[0],line[1],price,stock,productType));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,12 +55,22 @@ public class ProductService {
         }
     }
 
-    public Product seachProduct(String code) {
+    public Product searchProduct(String productid) {
         for (Product product : products) {
-            if (products.getCode().equals(code)) {
-                return products;
+            if (product.getCode().equals(productid)) {
+                return product;
             }
         }
         return null;
+    }
+
+    public void reduceStockByCode(String productid) {
+        for (Product p : products) {
+            if (p.getCode().equals(productid)) {
+                if (p.getStock() > 0) {
+                    p.setStock(p.getStock() - 1);
+                }
+            }
+        }
     }
 }
